@@ -1,0 +1,30 @@
+.login-container{
+    height: 100%;
+    background: url('../../assets/images/cafe.jpg') no-repeat;
+    background-size: cover;
+    padding: 7vw 35vw;
+    .login-wrapper{
+        background: white;
+        .branding{
+            padding: 0px 8vw;
+            img{
+                width: 100%;
+            }
+        }
+        .form-container{
+            padding: 0 4vw 4vw 4vw;
+            .row{
+                margin-top: 10px;
+            }
+            .form-group{
+                width: 100%;
+                .mat-form-field{
+                    width: 100%;
+                }
+            }
+            .mat-button{
+                width: 100%;
+            }
+        }
+    }
+}

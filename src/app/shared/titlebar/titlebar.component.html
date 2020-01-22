@@ -1,0 +1,29 @@
+<div class="toolbar-container">
+    <mat-toolbar color="primary">
+        <div class="menu-button">
+            <button mat-button (click)="toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        
+    
+        <div class="align-right">
+            <button mat-button>
+                <mat-icon>notifications_none</mat-icon>
+            </button>
+            <button mat-button [matMenuTriggerFor]="menu">
+                <mat-icon>account_circle</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>perm_identity</mat-icon>
+                    <span>Profile</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>power_settings_new</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
+        </div>
+    </mat-toolbar>
+</div>

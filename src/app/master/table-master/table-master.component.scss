@@ -1,0 +1,13 @@
+@import '../../../assets/styles/styles.scss';
+
+.cafetable-container{
+    padding: 20px 5vw 5vw 5vw;
+    height: calc(100vh - 20px);
+    overflow-y: auto;
+    .mat-card-content{
+        padding: 20px 13px;
+    }
+    .table-container{
+        margin-top: 30px;
+    }
+}

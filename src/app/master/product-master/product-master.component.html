@@ -1,0 +1,113 @@
+<app-titlebar></app-titlebar>
+<div class="product-container">
+    <div class="form-container">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Item Master</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="productForm">
+                    <div class="row">
+                        <div class="col-12 col-lg-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Category</mat-label>
+                                <mat-select formControlName="category_id">
+                                    <mat-option *ngFor="let cat of categoryData" [value]="cat.category_id"> {{ cat.category_name }} </mat-option>
+                                </mat-select>
+                                <mat-hint>Enter Category Name</mat-hint>
+                                <mat-error *ngIf="productForm.get('category_id').hasError('required')">
+                                    Category Name is Required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <mat-form-field  class="full-width">
+                                <input formControlName="product_name" autocomplete="off" matInput placeholder="Product Name">
+                                <mat-hint>Enter Product Name</mat-hint>
+                                <mat-error *ngIf="productForm.get('product_name').hasError('required')">
+                                    Product Name is Required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Unit</mat-label>
+                                <mat-select formControlName="unit_id">
+                                    <mat-option *ngFor="let unit of unitData" [value]="unit.unit_id">{{ unit.unit_name }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12 col-lg-3">
+                            <mat-form-field class="full-width">
+                                <input type="number" matInput autocomplete="off" formControlName="rate" placeholder="Rate">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <mat-form-field class="full-width">
+                                <input type="number" matInput autocomplete="off" formControlName="discount" placeholder="Discount">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-sm-7 col-lg-3">
+                            <mat-radio-group formControlName="status" aria-label="Select a Option">
+                                <mat-radio-button value="1">Enable</mat-radio-button>
+                                <mat-radio-button value="0">Disable</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col-12 col-sm-5 col-lg-2">
+                            <button type="button" (click)="saveData()" mat-button [disabled]="productForm.invalid">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="table-container">
+        <div class="table-wrapper">
+            <table class="full-width mat-elevation-z8" mat-table [dataSource]="productData">
+                <ng-container matColumnDef="SNo.">
+                    <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                    <td mat-cell *matCellDef="let element; let i = index"> {{ i+1 }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Category Name">
+                    <th mat-header-cell *matHeaderCellDef>Category Name</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.category_name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Product Name">
+                    <th mat-header-cell *matHeaderCellDef>Product Name</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.product_name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Unit Name">
+                        <th mat-header-cell *matHeaderCellDef>Unit Name</th>
+                        <td mat-cell *matCellDef="let element"> {{ element.unit_name }}</td>
+                    </ng-container>
+                <ng-container matColumnDef="Rate">
+                    <th mat-header-cell *matHeaderCellDef>Rate</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.rate }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Discount">
+                    <th mat-header-cell *matHeaderCellDef>Discount</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.discount }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element"> <span [ngClass]="{'text-danger':element.status==0,'text-success': element.status==1}">{{ (element.status==1)? 'Enable': 'Disable'  }}</span></td>
+                </ng-container>
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button (click)="editProduct(element)" mat-icon-button matTooltip="Edit Row">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button (click)="deleteProduct(element)" mat-icon-button matTooltip="Delete Row">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayColumns; let i = index"></tr>
+            </table>
+        </div>
+    </div>
+</div>

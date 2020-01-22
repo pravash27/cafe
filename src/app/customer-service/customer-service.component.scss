@@ -1,0 +1,65 @@
+@import '../../assets/styles/styles.scss';
+.service-container{
+    padding: 20px 2vw 2vw 2vw;
+    overflow-y: auto;
+    height: calc(100vh - 64px);
+    .product-container{
+        height: 35vw;
+        overflow-y: auto;
+        .product{
+            padding: 5px 0;
+        }
+    }
+
+    .order-container{
+        //width: 550px;
+        height: 400px;
+        overflow: auto;
+        .order-wrapper{
+            //padding: 0 20px;
+            .product-title{
+                font-size: larger;
+            }
+        }
+        .order-alter{
+            display: flex;
+            .plus , .minus{
+                display: flex;
+                width: 30px;
+                height: 27px;
+                justify-content: center;
+                background: $accent;
+                padding: 2px 0;
+                cursor: pointer;
+                .mat-icon{
+                    color: $white;
+                    padding: 1px 1px;
+                }
+            }
+            .quantity{
+                margin: 0px 12px;
+                font-size: larger;
+                font-weight: 500;
+            }
+            .amount{
+                margin-left: 5px;
+                font-size: larger;
+                font-weight: 500;
+            }
+        }
+        .total-amount-wrapper{
+            display: flex;
+            .amount{
+                font-size: larger;
+                font-weight: 500;
+            }
+            .delete{
+                color: red;
+                margin-left: 3px;
+                cursor: pointer;
+            }
+        }
+    }
+    
+    
+}

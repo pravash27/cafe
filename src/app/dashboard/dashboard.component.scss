@@ -1,0 +1,34 @@
+.dashboard-container{
+    padding: 20px 5vw 5vw 5vw;
+    height: calc(100vh - 20px);
+    overflow-y: auto;
+    .mat-card{
+        height: 100px;
+        .mat-card-content{
+            height:100%;
+            display: flex;
+            .card-icon{
+                height: 100%;
+                width: 40%;
+                padding-left: 20px;
+                .mat-icon{
+                    font-size: 60px;
+                }
+            }
+            .card-content{
+                width:60%;
+                label{
+                    margin: 0;
+                }
+                .title{
+                    font-size: medium;
+                }
+                .total{
+                    font-size: x-large;
+                    font-weight: 500;
+                    display: block;
+                }
+            }
+        }
+    }
+}

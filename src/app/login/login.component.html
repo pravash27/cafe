@@ -1,0 +1,28 @@
+<div class="login-container">
+    <div class="row login-wrapper">
+        <div class="col-12 branding">
+        <img src="../../assets/images/logo.png" alt="">
+        </div>
+        <div class="col-12 form-container">
+        <form [formGroup]="loginForm">
+            <div class="row">
+                <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input type="text" formControlName="email" matInput placeholder="Enter Your Email Id"  autocomplete="off">
+                </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input type="password" formControlName="password" matInput placeholder="Enter Your Password" autocomplete="off">
+                </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" (click)="login()" class="btn btn-primary" mat-button>Submit</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

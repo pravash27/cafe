@@ -1,0 +1,108 @@
+<app-titlebar></app-titlebar>
+<div class="service-container">
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-4">
+                            <mat-form-field class="full-width">
+                                <mat-label>Select Category</mat-label>
+                                <mat-select (selectionChange)="fetchProductByCategory()" [value]="category" [(ngModel)]="category">
+                                    <mat-option value="0">All</mat-option>
+                                    <mat-option [value]="cat.category_id" *ngFor="let cat of categoryList">{{ cat.category_name }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-8">
+                            <mat-form-field class="full-width">
+                                <input type="text" (keyup)="filterProducts()" [(ngModel)]="search" matInput placeholder="Search Items" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 product-container">
+                    <div class="row product" *ngFor="let product of tempProductList; let i = index">
+                        <div class="col-2">
+                            <span>{{ i+1 }}</span>
+                        </div>
+                        <div class="col-7">
+                            <div class="row">
+                                <div class="col-12">
+                                    {{ product.product_name }}
+                                </div>
+                                <div class="col-12">
+                                    {{ product.rate | currency: 'INR'}} {{ product.category_name+'/'+product.unit_name }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button (click)="addProductToOrder(product)" mat-button>Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <mat-form-field class="full-width">
+                                <mat-label>Select Table</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">Table 1</mat-option>
+                                    <mat-option value="1">Table 2</mat-option>
+                                    <mat-option value="1">Table 3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field class="full-width">
+                                    <input type="text" matInput placeholder="Order Date" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 order-container">
+                            <div class="row" *ngFor="let order of productOrder">
+                                <div class="col-3">
+                                    <div class="order-wrapper">
+                                        <h5 class="product-title mat-h1"> {{ order.product_name }} </h5>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="order-alter">
+                                        <span (click)="addQuantity(order)" class="plus"><mat-icon>add</mat-icon></span>
+                                        <span class="quantity">{{ order.quantity }}</span>
+                                        <span (click)="removeQuantity(order)" class="minus"><mat-icon class="minus">remove</mat-icon> </span>
+                                        <span class="amount">x {{ order.rate | currency: 'INR' }}/-</span>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="total-amount-wrapper">
+                                        <span class="amount">{{ order.totalprice | currency: 'INR' }}/-</span>
+                                        <span (click)="removeProductFromOrder(order)" class="delete"> <mat-icon>delete</mat-icon> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-8">
+                                    <span class="mat-h1">Total</span>
+                                </div>
+                                <div class="col-4">
+                                    <span class="mat-h1">{{ totalPrice | currency: 'INR'}}/-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

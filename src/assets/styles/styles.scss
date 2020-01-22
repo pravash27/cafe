@@ -1,0 +1,23 @@
+$primary: #03a9f4;
+$accent: #81c784;
+$white: #fff;
+.mat-button{
+    background: $accent;
+    color: $white;
+    padding-top: 3px;
+}
+
+.mat-radio-button{
+    margin-left: 15px;
+    padding-top: 15px;
+}
+.full-width{
+    width: 100%
+}
+
+.mat-card-header{
+    border-bottom: 1px solid $accent;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
+    text-align: center;
+}
