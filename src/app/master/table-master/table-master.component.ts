@@ -33,12 +33,12 @@ export class TableMasterComponent implements OnInit {
 
   saveData() {
     if (this.tableForm.valid) {
+      const tableData: Table = {
+        name: this.tableForm.get('table_name').value,
+        status: this.tableForm.get('status').value,
+        loginid: JSON.parse(localStorage.getItem('user')).login_id
+      };
       if (this.editTabId == 0) {
-        const tableData: Table = {
-          table_name: this.tableForm.get('table_name').value,
-          status: this.tableForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
-        };
         this.tableService.saveTable(tableData).subscribe(res => {
           if (res) {
             this._snackBar.open("Added Successfully!!!","",{
@@ -62,13 +62,7 @@ export class TableMasterComponent implements OnInit {
         });
       } else {
         console.log("Update....");
-        const tableData: Table = {
-          table_id: this.editTabId,
-          table_name: this.tableForm.get('table_name').value,
-          status: this.tableForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
-        };
-        this.tableService.updateTable(tableData).subscribe(res => {
+        this.tableService.updateTable(this.editTabId, tableData).subscribe(res => {
           if (res) {
             this._snackBar.open("Updated Successfully!!!","",{
               duration: 2000,
@@ -94,18 +88,18 @@ export class TableMasterComponent implements OnInit {
   }
 
   editTable(data: Table) {
-    this.editTabId = data.table_id;
+    this.editTabId = data.id;
     console.log(data);
     this.tableForm.patchValue({
-      table_name: data.table_name,
+      table_name: data.name,
       status: data.status.toString()
     });
   }
 
   deleteTable(data: Table) {
     console.log(data);
-    if (confirm("Are You Sure To Delete "+ data.table_name)) {
-      const tableId = data.table_id;
+    if (confirm("Are You Sure To Delete "+ data.name)) {
+      const tableId = data.id;
       this.tableService.deleteTable(tableId).subscribe(res => {
         if (res) {
           this._snackBar.open("Deleted Successfully!!!","",{

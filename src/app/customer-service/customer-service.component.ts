@@ -56,22 +56,22 @@ export class CustomerServiceComponent implements OnInit {
   filterProducts() {
     this.tempProductList = this.productsList.filter(data => {
       if(this.category == 0) {
-        return data.product_name.toLowerCase().includes(this.search);
+        return data.name.toLowerCase().includes(this.search);
       } else {
-        return data.category_id == this.category && data.product_name.toLowerCase().includes(this.search);
+        return data.category_id == this.category && data.name.toLowerCase().includes(this.search);
       }
     })
   }
   
   addProductToOrder(product: Product) {
     const order: Order = {
-      product_id: product.product_id,
-      product_name: product.product_name,
+      product_id: product.id,
+      product_name: product.name,
       quantity: 1,
       rate: product.rate,
       totalprice: product.rate
     };
-    const pId = product.product_id;
+    const pId = product.id;
     const index = this.productOrder.findIndex(data => {
       return data.product_id == pId;
     });

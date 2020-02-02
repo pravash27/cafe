@@ -17,28 +17,26 @@ const httpOptions = {
 export class AuthService {
 
   constructor(
-    private afauth: AngularFireAuth,
     private http: HttpClient
     ) { }
 
-  getCurrentUser() {
-    return new Promise<any>((resolve, reject) => {
-      this.afauth.auth.onAuthStateChanged((user) => {
-        if (user) {
-          resolve(user);
-        } else {
-          resolve(null);
-        }
-      });
-    });
+  loginWithEmailPassword(email: string, password: string): Observable<User> {
+    const userData = {
+      email,
+      password
+    };
+    return this.http.post<User>(apiUrl + '/auth/login', userData, httpOptions)
+    .pipe(
+      retry(1)
+    );
   }
 
-  loginWithEmailPassword(email: string, password: string) {
-    return this.afauth.auth.signInWithEmailAndPassword(email, password);
-  }
-
-  getCurrentUserFromDb(uid: string): Observable<User> {
-    return this.http.get<User>(apiUrl + '/login/' + uid, httpOptions)
+  getCurrentUserFromDb(): Observable<User> {
+    const data: User = JSON.parse(localStorage.getItem('user'));
+    const userdata = {
+      token: data.token
+    };
+    return this.http.post<User>(apiUrl + '/auth/checkuser', userdata,httpOptions)
     .pipe(
       retry(1)
     );

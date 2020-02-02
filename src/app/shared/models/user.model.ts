@@ -1,8 +1,9 @@
 export interface  User {
     username: string;
-    uid: string;
+    userid: string;
     email: string;
-    login_id: string;
+    id: string;
+    token?: string;
     createdate?: Date;
     updatedate?: Date;
 }

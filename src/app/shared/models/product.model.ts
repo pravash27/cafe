@@ -1,9 +1,12 @@
+import { Unit } from './unit.model';
+import { Category } from './category.model';
+
 export interface Product {
-    product_id?: number;
+    id?: number;
     category_id?: number;
-    category_name?: string;
-    unit_name?: string;
-    product_name: string;
+    category?: Category;
+    unit?: Unit;
+    name: string;
     unit_id?: number;
     rate?: number;
     discount?: number;

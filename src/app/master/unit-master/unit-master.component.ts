@@ -32,12 +32,12 @@ export class UnitMasterComponent implements OnInit {
 
   saveData() {
     if (this.unitForm.valid) {
+      const unitData: Unit = {
+        name: this.unitForm.get('unit_name').value,
+        status: this.unitForm.get('status').value,
+        loginid: JSON.parse(localStorage.getItem('user')).login_id
+      };
       if (this.editUnitId == 0) {
-        const unitData: Unit = {
-          unit_name: this.unitForm.get('unit_name').value,
-          status: this.unitForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
-        };
         this.unitService.saveUnit(unitData).subscribe(res => {
           if (res) {
             this._snackBar.open("Added Successfully!!!","",{
@@ -61,13 +61,7 @@ export class UnitMasterComponent implements OnInit {
         });
       } else {
         console.log("Update....");
-        const unitData: Unit = {
-          unit_id: this.editUnitId,
-          unit_name: this.unitForm.get('unit_name').value,
-          status: this.unitForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
-        };
-        this.unitService.updateUnit(unitData).subscribe(res => {
+        this.unitService.updateUnit(this.editUnitId, unitData).subscribe(res => {
           if (res) {
             this._snackBar.open("Updated Successfully!!!","",{
               duration: 2000,
@@ -93,18 +87,18 @@ export class UnitMasterComponent implements OnInit {
   }
 
   editUnit(data: Unit) {
-    this.editUnitId = data.unit_id;
+    this.editUnitId = data.id;
     console.log(data);
     this.unitForm.patchValue({
-      unit_name: data.unit_name,
+      unit_name: data.name,
       status: data.status.toString()
     });
   }
 
   deleteUnit(data: Unit) {
     console.log(data);
-    if (confirm("Are You Sure To Delete "+ data.unit_name)) {
-      const unitId = data.unit_id;
+    if (confirm("Are You Sure To Delete "+ data.name)) {
+      const unitId = data.id;
       this.unitService.deleteUnit(unitId).subscribe(res => {
         if (res) {
           this._snackBar.open("Deleted Successfully!!!","",{

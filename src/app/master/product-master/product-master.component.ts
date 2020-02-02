@@ -46,10 +46,10 @@ export class ProductMasterComponent implements OnInit {
         this.unitData = res;
       }
     });
-    this.fatchData();
+    this.fetchData();
   }
-  fatchData(){
-    this.productService.fatchProductList().subscribe(res => {
+  fetchData(){
+    this.productService.fetchProducts().subscribe(res => {
       if(res){
         this.productData = res;
       }
@@ -57,23 +57,23 @@ export class ProductMasterComponent implements OnInit {
   }
   saveData() {
     if (this.productForm.valid) {
+      const productData: Product = {
+        category_id: this.productForm.get('category_id').value,
+        name: this.productForm.get('product_name').value,
+        unit_id: this.productForm.get('unit_id').value,
+        rate: this.productForm.get('rate').value,
+        discount: this.productForm.get('discount').value,
+        status: this.productForm.get('status').value,
+        loginid: JSON.parse(localStorage.getItem('user')).login_id
+      };
       if (this.editProdId == 0) {
-        const productData: Product = {
-          category_id: this.productForm.get('category_id').value,
-          product_name: this.productForm.get('product_name').value,
-          unit_id: this.productForm.get('unit_id').value,
-          rate: this.productForm.get('rate').value,
-          discount: this.productForm.get('discount').value,
-          status: this.productForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
-        };
         this.productService.productSave(productData).subscribe(res => {
           if (res) {
             this._snackBar.open("Added Successfully!!!","",{
               duration: 2000,
             });
             this.formClear();
-            this.fatchData();
+            this.fetchData();
           }
         },
         err => {
@@ -90,23 +90,13 @@ export class ProductMasterComponent implements OnInit {
         });
       } else {
         console.log("Update....");
-        const productData: Product = {
-          product_id: this.editProdId,
-          category_id: this.productForm.get('category_id').value,
-          product_name: this.productForm.get('product_name').value,
-          unit_id: this.productForm.get('unit_id').value,
-          rate: this.productForm.get('rate').value,
-          discount: this.productForm.get('discount').value,
-          status: this.productForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
-        };
-        this.productService.updateProduct(productData).subscribe(res => {
+        this.productService.updateProduct(this.editProdId, productData).subscribe(res => {
           if (res) {
             this._snackBar.open("Updated Successfully!!!","",{
               duration: 2000,
             });
             this.formClear();
-            this.fatchData();
+            this.fetchData();
             this.editProdId = 0;
           }
         },
@@ -125,11 +115,11 @@ export class ProductMasterComponent implements OnInit {
     }
   }
   editProduct(data: Product) {
-    this.editProdId = data.product_id;
+    this.editProdId = data.id;
     console.log(data);
     this.productForm.patchValue({
       category_id: data.category_id,
-      product_name: data.product_name,
+      product_name: data.name,
       unit_id: data.unit_id,
       rate: data.rate,
       discount: data.discount,
@@ -139,15 +129,15 @@ export class ProductMasterComponent implements OnInit {
 
   deleteProduct(data: Product) {
     console.log(data);
-    if (confirm("Are You Sure To Delete "+ data.product_name)) {
-      const prodId = data.product_id;
+    if (confirm("Are You Sure To Delete "+ data.name)) {
+      const prodId = data.id;
       this.productService.deleteProduct(prodId).subscribe(res => {
         if (res) {
           this._snackBar.open("Deleted Successfully!!!","",{
             duration: 2000,
           });
           this.formClear();
-          this.fatchData();
+          this.fetchData();
         }
       },
       err => {

@@ -40,9 +40,9 @@ export class CategoryMasterComponent implements OnInit {
     if (this.categoryForm.valid) {
       if (this.editCatId == 0) {
         const categoryData: Category = {
-          category_name: this.categoryForm.get('category_name').value,
+          name: this.categoryForm.get('category_name').value,
           status: this.categoryForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
+          loginid: JSON.parse(localStorage.getItem('user')).id
         };
         this.categoryService.saveCategory(categoryData).subscribe(res => {
           if (res) {
@@ -68,12 +68,11 @@ export class CategoryMasterComponent implements OnInit {
       } else {
         console.log("Update....");
         const categoryData: Category = {
-          category_id: this.editCatId,
-          category_name: this.categoryForm.get('category_name').value,
+          name: this.categoryForm.get('category_name').value,
           status: this.categoryForm.get('status').value,
-          loginid: JSON.parse(localStorage.getItem('user')).login_id
+          loginid: JSON.parse(localStorage.getItem('user')).id
         };
-        this.categoryService.updateCategory(categoryData).subscribe(res => {
+        this.categoryService.updateCategory(this.editCatId,categoryData).subscribe(res => {
           if (res) {
             this._snackBar.open("Updated Successfully!!!","",{
               duration: 2000,
@@ -99,18 +98,18 @@ export class CategoryMasterComponent implements OnInit {
   }
 
   editCategory(data: Category) {
-    this.editCatId = data.category_id;
+    this.editCatId = data.id;
     console.log(data);
     this.categoryForm.patchValue({
-      category_name: data.category_name,
+      category_name: data.name,
       status: data.status.toString()
     });
   }
 
   deleteCategory(data: Category) {
     console.log(data);
-    if (confirm("Are You Sure To Delete "+ data.category_name)) {
-      const categoryId = data.category_id;
+    if (confirm("Are You Sure To Delete "+ data.name)) {
+      const categoryId = data.id;
       this.categoryService.deleteCategory(categoryId).subscribe(res => {
         if (res) {
           this._snackBar.open("Deleted Successfully!!!","",{

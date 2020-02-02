@@ -18,21 +18,35 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-        this.auth.getCurrentUser().then(user => {
-          if (user) {
-            this.auth.getCurrentUserFromDb(user.uid).subscribe(res => {
-              if (res[0]) {
-                resolve(true);
-              } else {
-                this.router.navigate(['/login']);
-                resolve(false);
-              }
-            });
-          } else {
-            this.router.navigate(['/login']);
-            resolve(false);
-          }
-        });
+        // this.auth.getCurrentUser().then(user => {
+        //   if (user) {
+        //     this.auth.getCurrentUserFromDb(user.uid).subscribe(res => {
+        //       if (res[0]) {
+        //         resolve(true);
+        //       } else {
+        //         this.router.navigate(['/login']);
+        //         resolve(false);
+        //       }
+        //     });
+        //   } else {
+        //     this.router.navigate(['/login']);
+        //     resolve(false);
+        //   }
+        // });
+        if (localStorage.getItem('user')) {
+          this.auth.getCurrentUserFromDb().subscribe(res => {
+            console.log(res);
+            if(res.id){
+              resolve(true);
+            }else{
+              this.router.navigate(['/login']);
+              resolve(false)
+            }
+          });
+        }else{
+          this.router.navigate(['/login']);
+          resolve(false)
+        }
     });
   }
 }
