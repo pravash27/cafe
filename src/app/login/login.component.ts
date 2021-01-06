@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   });
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private snackbar: MatSnackBar
     ) {}
 
   login() {
@@ -33,6 +35,10 @@ export class LoginComponent implements OnInit {
           const userData: User = res;
           localStorage.setItem('user', JSON.stringify(userData));
           this.router.navigate(['/dashboard']);
+        }
+      },err => {
+        if(err.status===404){
+          this.snackbar.open("Invalid Email and Password",'',{duration:3000})
         }
       });
     }

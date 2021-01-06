@@ -53,6 +53,13 @@ export class TableServiceService {
     );
   }
 
+  getClearedTables():Observable<Table[]>{
+    return this.http.get<Table[]>(apiUrl + "/table/cleared", httpOptions)
+    .pipe(
+      retry(1)
+    );
+  }
+
   deleteTable(id: number): Observable<Table> {
     return this.http.delete<Table>(apiUrl + '/table/' + id, httpOptions)
     .pipe(

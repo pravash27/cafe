@@ -1,0 +1,92 @@
+<app-titlebar></app-titlebar>
+<div class="ui-container">
+    <div class="form-container">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Customer Master</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="customerForm">
+                    <div class="row">
+                        <div class="col-12 col-lg-3">
+                            <mat-form-field  class="full-width">
+                                <input formControlName="name" autocomplete="off" matInput placeholder="Customer Name">
+                                <mat-hint>Enter Customer Name</mat-hint>
+                                <mat-error *ngIf="customerForm.get('name').hasError('required')">
+                                    Customer Name is Required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                          <mat-form-field  class="full-width">
+                            <input formControlName="mobile" autocomplete="off" matInput placeholder="Mobile No." maxlength="10">
+                            <mat-hint>Enter Mobile No.</mat-hint>
+                            <mat-error *ngIf="customerForm.get('mobile').hasError('required')">
+                                Mobile No. is Required
+                            </mat-error>
+                            <mat-error *ngIf="customerForm.get('mobile').hasError('pattern')">
+                              Please Enter Valid Mobile No.
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                          <mat-form-field  class="full-width">
+                              <textarea formControlName="address" autocomplete="off" matInput placeholder="Address"></textarea>
+                              <mat-hint>Enter Address</mat-hint>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-12 col-sm-7 col-lg-3">
+                            <mat-radio-group formControlName="status" aria-label="Select a Option">
+                                <mat-radio-button value="1">Enable</mat-radio-button>
+                                <mat-radio-button value="0">Disable</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="col-12 col-sm-5 col-lg-2">
+                            <button type="button" (click)="saveData()" mat-button [disabled]="customerForm.invalid">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="table-container">
+        <div class="table-wrapper">
+            <table class="full-width mat-elevation-z8" mat-table [dataSource]="customerData">
+                <ng-container matColumnDef="SNo.">
+                    <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                    <td mat-cell *matCellDef="let element; let i = index"> {{ i+1 }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Customer Name">
+                    <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+                    <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Mobile No.">
+                  <th mat-header-cell *matHeaderCellDef>Mobile No.</th>
+                  <td mat-cell *matCellDef="let element"> {{ element.mobile }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Address">
+                  <th mat-header-cell *matHeaderCellDef>Address</th>
+                  <td mat-cell *matCellDef="let element"> {{ element.address }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element"> <span [ngClass]="{'text-danger':element.status==0,'text-success': element.status==1}">{{ (element.status==1)? 'Enable': 'Disable'  }}</span></td>
+                </ng-container>
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button (click)="editCustomer(element)" mat-icon-button matTooltip="Edit Row">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button (click)="deleteCustomer(element)" mat-icon-button matTooltip="Delete Row">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayColumns; let i = index"></tr>
+            </table>
+        </div>
+    </div>
+</div>

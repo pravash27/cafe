@@ -1,0 +1,118 @@
+<h1 mat-dialog-title>Bill Payment</h1>
+<div mat-dialog-content>
+  <form [formGroup]="paymentForm">
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field class="full-width">
+          <input matInput formControlName="date" [ngxMatDatetimePicker]="picker" placeholder="Choose a Payment Date" >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+          <mat-error *ngIf="paymentForm.get('date').hasError('required')">
+            Date is Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-12">
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Order Details
+              </mat-panel-title>
+              <mat-panel-description>
+                {{billing.bill_prefix+billing.bill_no}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="table-container">
+              <div class="table-wrapper">
+                <table class="full-width " mat-table [dataSource]="billing.billItems">
+                  <ng-container matColumnDef="Sno">
+                      <th mat-header-cell *matHeaderCellDef>Sno.</th>
+                      <td mat-cell *matCellDef="let element; let i = index"> {{ i+1 }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Product Name">
+                      <th mat-header-cell *matHeaderCellDef>Table Name</th>
+                      <td mat-cell *matCellDef="let element"> {{ element.product_name }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Quantity">
+                      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                      <td mat-cell *matCellDef="let element">{{element.qty}} Pcs</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Amount">
+                    <th mat-header-cell *matHeaderCellDef>Amount</th>
+                    <td mat-cell *matCellDef="let element"> {{element.totalamount | currency:'INR'}}</td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayColumns; let i = index"></tr>
+                </table>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Mobile No." formControlName="mobile" matInput [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let customer of filteredCustomers" [value]="customer">
+              {{customer.mobile}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="paymentForm.get('mobile').hasError('required')">
+            Mobile No. is Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="full-width">
+            <input type="text" matInput formControlName="name" placeholder="Customer Name" autocomplete="off">
+            <mat-error *ngIf="paymentForm.get('name').hasError('required')">
+              Customer Name is Required
+            </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="full-width">
+            <input type="text" formControlName="billamount" matInput placeholder="Bill Amount" autocomplete="off">
+        </mat-form-field>
+        <mat-error *ngIf="paymentForm.get('date').hasError('required')">
+          Bill Amount is Required
+        </mat-error>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="full-width">
+            <input type="number" formControlName="othercharge" min="0" matInput placeholder="Other Charges" autocomplete="off">
+            <mat-error *ngIf="paymentForm.get('othercharge').hasError('min')">
+              Add Valid Charges
+            </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="full-width">
+            <input type="text" matInput formControlName="totalamount" placeholder="Total Amount" autocomplete="off">
+            <mat-error *ngIf="paymentForm.get('totalamount').hasError('required')">
+              Amount  is Required
+            </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Pay Mode</mat-label>
+          <mat-select formControlName="paymode">
+            <mat-option [value]="'Cash'">Cash</mat-option>
+            <mat-option [value]="'Card'">Card</mat-option>
+            <mat-option [value]="'UPI'">UPI</mat-option>
+          </mat-select>
+          <mat-error *ngIf="paymentForm.get('paymode').hasError('required')">
+            Payment Mode is Required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button (click)="billPayment()" class="action-button" mat-button>Save Bill</button>
+  <button (click)="close()" class="action-button" mat-button>Close</button>
+</div>

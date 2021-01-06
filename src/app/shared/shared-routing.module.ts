@@ -7,6 +7,7 @@ import { ProductMasterComponent } from '../master/product-master/product-master.
 import { TableMasterComponent } from '../master/table-master/table-master.component';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { UnitMasterComponent } from '../master/unit-master/unit-master.component';
+import { CustomerComponent } from '../master/customer/customer.component';
 
 const routes: Routes = [
   { path: 'service', component: CustomerServiceComponent, canActivate: [AuthGuard] },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'category', component: CategoryMasterComponent, canActivate: [AuthGuard] },
   { path: 'product', component: ProductMasterComponent, canActivate: [AuthGuard] },
   { path: 'table', component: TableMasterComponent, canActivate: [AuthGuard] },
-  { path: 'unit', component: UnitMasterComponent, canActivate: [AuthGuard] }
+  { path: 'unit', component: UnitMasterComponent, canActivate: [AuthGuard] },
+  { path: 'customer', component: CustomerComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

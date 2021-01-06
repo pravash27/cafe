@@ -20,7 +20,7 @@ const httpOptions = {
 export class UnitServiceService {
 
   constructor(private http: HttpClient) { }
-  
+
   saveUnit(unit: Unit): Observable<Unit> {
     console.log("Saving...");
     const unitData = Object.assign({}, unit);
@@ -54,7 +54,7 @@ export class UnitServiceService {
   }
 
   deleteUnit(id: number): Observable<Unit> {
-    return this.http.delete<Unit>(apiUrl + '/unit' + id,httpOptions)
+    return this.http.delete<Unit>(apiUrl + '/unit/' + id,httpOptions)
     .pipe(
       retry(1)
     );

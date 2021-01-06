@@ -31,3 +31,19 @@ $cafe-theme: mat-light-theme($cafe-primary, $cafe-accent, $cafe-warn);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+button:focus{
+  outline: none !important
+}
+.full-width{
+  width: 100%
+}
+.ui-container{
+  padding: 20px 2vw 2vw 2vw;
+  overflow-y: auto;
+  height: calc(100vh - 64px);
+}
+.action-button{
+  background: #81c784;
+  color: #fff;
+  padding-top: 3px;
+}

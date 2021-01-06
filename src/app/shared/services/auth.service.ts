@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable,  } from 'rxjs';
+import { retry } from 'rxjs/operators';
 import { User } from '../models/user.model';
 const apiUrl = environment.nodeUrl.dev;
 const httpOptions = {

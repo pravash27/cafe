@@ -58,7 +58,7 @@ export class ProductService {
   }
 
   deleteProduct(id: number): Observable<Product>{
-    return this.http.get<Product>(apiUrl + "/product" + id)
+    return this.http.get<Product>(apiUrl + "/product/" + id,httpOptions)
     .pipe(
       retry(1)
     );

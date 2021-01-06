@@ -5,6 +5,7 @@ import { CategoryMasterComponent } from './category-master/category-master.compo
 import { ProductMasterComponent } from './product-master/product-master.component';
 import { SharedModule } from '../shared/shared.module';
 import { UnitMasterComponent } from './unit-master/unit-master.component';
+import { CustomerComponent } from './customer/customer.component';
 
 
 
@@ -13,7 +14,8 @@ import { UnitMasterComponent } from './unit-master/unit-master.component';
     TableMasterComponent,
     CategoryMasterComponent,
     ProductMasterComponent,
-    UnitMasterComponent
+    UnitMasterComponent,
+    CustomerComponent
   ],
   imports: [
     CommonModule,

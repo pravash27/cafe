@@ -18,7 +18,7 @@ export class ProductMasterComponent implements OnInit {
   productData: Product[] = [];
   categoryData: Category[] = [];
   unitData: Unit[] = [];
-  displayColumns: String[] = ["SNo.","Category Name","Product Name","Unit Name","Rate","Discount","Status","Action"]
+  displayColumns: string[] = ["SNo.","Category Name","Product Name","Unit Name","Rate","Discount","Status","Action"]
   productForm = new FormGroup({
     category_id: new FormControl('', [Validators.required]),
     product_name: new FormControl('', [Validators.required]),
@@ -27,7 +27,7 @@ export class ProductMasterComponent implements OnInit {
     discount: new FormControl('0'),
     status: new FormControl('1'),
   });
-  editProdId:number = 0;
+  editProdId: number = 0;
   constructor(
     private categoryService: CategoryServiceService,
     private unitService: UnitServiceService,
